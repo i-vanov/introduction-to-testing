@@ -4,15 +4,29 @@ import userEvent from '@testing-library/user-event';
 import { Counter } from './counter';
 
 import '@testing-library/jest-dom/vitest';
+import { resetClipboardStubOnView } from '@testing-library/user-event/dist/cjs/utils/index.js';
 
-describe.todo('Counter ', () => {
+describe('Counter ', () => {
   beforeEach(() => {
     render(<Counter />);
   });
 
-  it('renders with an initial count of 0');
+  it('renders with an initial count of 0', () => {
+    const counter = screen.getByTestId('counter-count');
+    expect(counter).toHaveTextContent("0");
+  });
 
-  it('disables the "Decrement" and "Reset" buttons when the count is 0');
+  it('disables the "Decrement" and "Reset" buttons when the count is 0', () => {
+    const counter = screen.getByTestId('counter-count');
+    const value = counter.textContent;
+    // Fetch the decrement button by using screen.getByRole and case-insensitive matching
+    const decrementButton = screen.getByRole('button', { name: /decrement/i });
+    const resetButton = screen.getByRole('button', { name: /reset/i });
+
+    expect(decrementButton).toBeDisabled();
+    expect(resetButton).toBeDisabled();
+
+  });
 
   it.todo('displays "days" when the count is 0', () => {});
 
