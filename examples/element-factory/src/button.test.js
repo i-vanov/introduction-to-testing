@@ -1,3 +1,4 @@
+import { screen } from '@testing-library/dom';
 import { createButton } from './button.js';
 
 describe('createButton', () => {
@@ -6,8 +7,12 @@ describe('createButton', () => {
     button = createButton();
   })
   it('should create a button element', () => {
-
     expect(button).toBeInstanceOf(HTMLButtonElement);
+    document.body.appendChild(button);
+    // Find the button with the matching name from the perspective of a screen reader
+    button = screen.getByRole('button', { name: 'Click Me'});
+    
+    expect(button).toBeInTheDocument();
   });
 
   it('should have the text "Click Me"', () => {
