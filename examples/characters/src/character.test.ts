@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { Character } from './character.js';
 import { Person } from './person.js';
 
@@ -11,7 +11,8 @@ describe('Character', () => {
 
   // Execute code before each test
   beforeEach(() => {
-    character = new Character(firstName, lastName, role, 1, () => 15);
+    vi.spyOn(Math, 'random').mockImplementation(() => 15);
+    character = new Character(firstName, lastName, role, 1, Math.random());
   });
   
   it(
