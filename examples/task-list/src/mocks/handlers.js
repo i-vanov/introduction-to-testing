@@ -11,4 +11,14 @@ const createTask = (title) => ({
   lastModified: new Date('02-29-2024').toISOString(),
 });
 
-export const handlers = [];
+export const handlers = [
+  http.get('/api/tasks', async () => {
+    return HttpResponse.json(tasks);
+  }),
+  http.post('/api/task', async({ request }) => {
+    const { title } = await request.json();
+    const newTask = createTask(title);
+    tasks.push(newTask);
+    return HttpResponse.json(newTask, { status: 201 });
+  })
+];
