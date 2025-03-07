@@ -1,5 +1,11 @@
 import { expect, it, vi, beforeEach, afterEach, describe } from 'vitest';
 import { log } from './log';
+import { sendToServer } from './send-to-server';
+
+// Mock the dependency
+ vi.mock('./send-to-server', () => {
+    return {sendToServer: vi.fn() };
+});
 
 describe('logger', () => {
     describe('development', () => {
@@ -38,6 +44,7 @@ describe('logger', () => {
                 log('Hello World');
     
                 expect(logSpy).not.toHaveBeenCalled();
+                expect(sendToServer).toHaveBeenCalled()
         });
     })
 });
